@@ -1,2 +1,28 @@
-# eleicoes-municipais
-Esse dashboard faz uma análise de dados de eleições municipais, trazendo estatísticas sobre votos de candidatos a vereadores e prefeitos.
+# Dashboard de Análise de Dados de Eleições Municipais
+
+Este dashboard realiza a análise de dados de eleições municipais, trazendo estatísticas sobre votos de candidatos a vereadores e prefeitos.
+
+## Fonte dos Dados
+
+Os dados são baixados do site do Tribunal Superior Eleitoral (TSE):
+- [Dados Abertos TSE](https://dadosabertos.tse.jus.br/dataset//resultados-{ano})
+
+## Tecnologias Utilizadas
+
+- Polars:  Biblioteca para leitura e manipulação de dados.
+- Streamlit: Framework para construção de dashboards interativos em Python.
+- Plotly Express: Biblioteca para criação de visualizações interativas.
+
+## Funcionalidades
+
+- **Análise por Município:** Seleção dinâmica de municípios para visualização dos resultados.
+- **Filtros por Cargo e Candidato:** Visualização específica dos votos para prefeito ou vereador, e por candidato.
+- **Visualizações Interativas:** Gráficos dinâmicos para análise detalhada dos resultados.
+
+## Instruções de Uso
+
+1. Instale as bibliotecas necessárias:
+ - pip install streamlit plotly polars
+2. Execute o aplicativo Streamlit:
+- python -m streamlit run streamlit_app.py
+
