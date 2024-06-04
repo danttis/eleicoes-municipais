@@ -4,7 +4,7 @@ Este dashboard realiza a análise de dados de eleições municipais, trazendo es
 
 ## Fonte dos Dados
 
-Os dados são baixados do site do Tribunal Superior Eleitoral (TSE):
+Os dados devem ser baixados do site do Tribunal Superior Eleitoral (TSE):
 - [Dados Abertos TSE](https://dadosabertos.tse.jus.br/dataset//resultados-{ano})
 
 ## Tecnologias Utilizadas
@@ -23,7 +23,10 @@ Os dados são baixados do site do Tribunal Superior Eleitoral (TSE):
 
 1. Instale as bibliotecas necessárias:
  - pip install streamlit plotly polars
-2. Execute o aplicativo Streamlit:
+
+2. Baixe os dados e substitua o nome na linha 7 do arquivo streamlit_app.py
+ 
+3. Execute o aplicativo Streamlit:
 - python -m streamlit run streamlit_app.py
 
 
