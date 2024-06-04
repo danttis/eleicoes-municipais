@@ -26,3 +26,7 @@ Os dados são baixados do site do Tribunal Superior Eleitoral (TSE):
 2. Execute o aplicativo Streamlit:
 - python -m streamlit run streamlit_app.py
 
+
+## Exemplo de Dashboard
+![Dashboard](./example.png)
+
