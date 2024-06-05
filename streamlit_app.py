@@ -1,5 +1,3 @@
-import streamlit as st
-import plotly.express as px
 from funcoes import *
 
 st.set_page_config(page_title="Dashboard de Análise Votos", page_icon=":rocket:", layout="wide", initial_sidebar_state="expanded")
@@ -7,7 +5,7 @@ st.set_page_config(page_title="Dashboard de Análise Votos", page_icon=":rocket:
 data = pl.read_csv('./votacao_secao_2020_CE.csv', separator=';', encoding='Latin-1') # https://dadosabertos.tse.jus.br/dataset/resultados-2020
 
 ano = data['ANO_ELEICAO'].unique()[0]
-st.title(f'Análise dos dados eleitorais de {ano}')
+st.title(f'Análise dos dados eleitorais de {ano} - CE')
 st.sidebar.title('Menu')
 background_image = """
 <style>
@@ -77,18 +75,21 @@ if filtro_principal_municipio != 'Selecione':
                     data1 = data.filter((data['NM_VOTAVEL'] == filtro_candidato) & (data['DS_CARGO'] == filtro_cargoNB))
                 else: 
                     data1 = data.filter(data['NM_VOTAVEL'] == filtro_candidato)
-                cargo = data1['DS_CARGO'].unique()[0]
-                st.title(f'Candidato a {cargo}:{filtro_candidato}')
-                col1,col2 = st.columns(2)
-                quantidade_candidato = sum(data1['QT_VOTOS'])
-                data = data.filter(data['DS_CARGO'] == 'Prefeito')
-                quantidade_total = sum(data['QT_VOTOS'])
-                proporcao_de_votos = quantidade_candidato/quantidade_total *100
-                col1.html(f'<table style="border-collapse: collapse; width: 100%; border: 1px solid black;"><tr><td style="border: 1px solid black; padding: 8px;">Total de Votos</td><td style="border: 1px solid black; padding: 8px;">Votos do Candidato</td><td style="border: 1px solid black; padding: 8px;">Percentual de votos do candidato</td></tr><tr><td style="border: 1px solid black; padding: 8px;">{quantidade_total}</td><td style="border: 1px solid black; padding: 8px;">{quantidade_candidato}</td><td style="border: 1px solid black; padding: 8px;">{round(proporcao_de_votos,2)}%</td></tr></table>')
-                col2.plotly_chart(plot_local_votacao(data1, candidato=True))
-                tableP = table_prop(data, data1)
-                col1.text("Percentual de votos do candidato por local")
-                col1.dataframe(tableP)
+                if len(data1['DT_ELEICAO'].unique()) == 1:
+                    primeiro = data['DT_ELEICAO'].unique()[0]
+                    data = data.filter(data['DT_ELEICAO'] == primeiro)
+                    plot_estatisticas_candidato(data, data1, filtro_candidato=filtro_candidato)
+                else:
+                    data_turnos = data['DT_ELEICAO'].unique().sort()
+                    primeiro, segundo = data_turnos[0], data_turnos[1]
+                    data1_turno1 = data1.filter(data1['DT_ELEICAO'] == primeiro)
+                    data1_turno2 = data1.filter(data1['DT_ELEICAO'] == segundo)
+                    
+                    data3 = data.filter(data['DT_ELEICAO'] == primeiro)
+                    data4 = data.filter(data['DT_ELEICAO'] == segundo)
+                    plot_estatisticas_candidato(data3, data1_turno1, filtro_candidato=filtro_candidato, cargo='Prefeito')
+                    plot_estatisticas_candidato(data4, data1_turno2, filtro_candidato=filtro_candidato, turno=2, cargo='Prefeito')
+                
                 
 
 

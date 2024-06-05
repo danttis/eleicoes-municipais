@@ -1,5 +1,6 @@
 import polars as pl
 import plotly.graph_objects as go
+import streamlit as st
 
 def plot_local_votacao(dataset, candidato=False):
     # Agrupamento por local de votação e soma da quantidade de votos
@@ -75,3 +76,21 @@ def plot_local_candicato_pie(dataset):
     fig = go.Figure(data=[go.Pie(labels=votos_por_candidato['NM_VOTAVEL'], values=votos_por_candidato['QT_VOTOS'], hole=.3)])
 
     return fig
+
+
+def plot_estatisticas_candidato(data1, data2,filtro_candidato , turno = 1, cargo='Vereador'):
+    #cargo = data2['DS_CARGO'].unique()[0]
+    if cargo == 'Vereador':
+        st.title(f'{filtro_candidato} candidato a {cargo}')
+    else:
+        st.title(f'{filtro_candidato} candidato a {cargo} no {turno}º turno')
+    col1,col2 = st.columns(2)
+    quantidade_candidato = sum(data2['QT_VOTOS'])
+    data1 = data1.filter(data1['DS_CARGO'] == 'Prefeito')
+    quantidade_total = sum(data1['QT_VOTOS'])
+    proporcao_de_votos = quantidade_candidato/quantidade_total *100
+    col1.html(f'<table style="border-collapse: collapse; width: 100%; border: 1px solid black;"><tr><td style="border: 1px solid black; padding: 8px;">Total de Votos</td><td style="border: 1px solid black; padding: 8px;">Votos do Candidato</td><td style="border: 1px solid black; padding: 8px;">Percentual de votos do candidato</td></tr><tr><td style="border: 1px solid black; padding: 8px;">{quantidade_total}</td><td style="border: 1px solid black; padding: 8px;">{quantidade_candidato}</td><td style="border: 1px solid black; padding: 8px;">{round(proporcao_de_votos,2)}%</td></tr></table>')
+    col2.plotly_chart(plot_local_votacao(data1, candidato=True))
+    tableP = table_prop(data1, data2)
+    col1.text("Percentual de votos do candidato por local")
+    col1.dataframe(tableP)
