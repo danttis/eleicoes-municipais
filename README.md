@@ -24,12 +24,12 @@ Os dados devem ser baixados do site do Tribunal Superior Eleitoral (TSE):
 1. Instale as bibliotecas necessárias:
  - pip install streamlit plotly polars
 
-2. Baixe os dados e substitua o nome na linha 7 do arquivo streamlit_app.py
+2. Baixe os dados coloque na pasta e substitua o nome na linha 7 do arquivo streamlit_app.py
  
 3. Execute o aplicativo Streamlit:
 - python -m streamlit run streamlit_app.py
 
 
 ## Exemplo de Dashboard
-![Dashboard](./example.png)
+![Dashboard](./example_dash.png)
 
