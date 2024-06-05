@@ -4,7 +4,7 @@ Este dashboard realiza a análise de dados de eleições municipais, trazendo es
 
 ## Fonte dos Dados
 
-Os dados devem ser baixados do site do Tribunal Superior Eleitoral (TSE):
+Os dados devem ser baixados do site do Tribunal Superior Eleitoral (TSE), os quais devem ser do tipo Votação por seção eleitoral, por estado e de eleições municipais:
 - [Dados Abertos TSE](https://dadosabertos.tse.jus.br/dataset//resultados-{ano})
 
 ## Tecnologias Utilizadas
