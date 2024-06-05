@@ -8,8 +8,19 @@ data = pl.read_csv('./votacao_secao_2020_CE.csv', separator=';', encoding='Latin
 
 ano = data['ANO_ELEICAO'].unique()[0]
 st.title(f'Análise dos dados eleitorais de {ano}')
-
 st.sidebar.title('Menu')
+background_image = """
+<style>
+[data-testid="stAppViewContainer"] > .main {
+    background-image: url("https://uploaddeimagens.com.br/images/004/793/299/full/fundo.png");
+    background-size: 100vw 100vh;  # This sets the size to cover 100% of the viewport width and height
+    background-position: center;  
+    background-repeat: no-repeat;
+}
+</style>
+"""
+st.markdown(background_image, unsafe_allow_html=True)
+
 
 filtro_principal_municipio = st.sidebar.selectbox("Selecione o Município", ['Selecione'] + data['NM_MUNICIPIO'].unique().sort().to_list())
 
@@ -61,6 +72,11 @@ if filtro_principal_municipio != 'Selecione':
             filtro_candidato = st.sidebar.selectbox("Selecione o Candidato", ['Selecione'] + data['NM_VOTAVEL'].unique().sort().to_list())
             if filtro_candidato != 'Selecione':
                 data1 = data.filter(data['NM_VOTAVEL'] == filtro_candidato)
+                if filtro_candidato == 'VOTO BRANCO' or filtro_candidato == 'VOTO NULO':
+                    filtro_cargoNB = st.sidebar.selectbox("Selecione o Cargo", ['Prefeito','Vereador'])
+                    data1 = data.filter((data['NM_VOTAVEL'] == filtro_candidato) & (data['DS_CARGO'] == filtro_cargoNB))
+                else: 
+                    data1 = data.filter(data['NM_VOTAVEL'] == filtro_candidato)
                 cargo = data1['DS_CARGO'].unique()[0]
                 st.title(f'Candidato a {cargo}:{filtro_candidato}')
                 col1,col2 = st.columns(2)
